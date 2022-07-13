@@ -1,5 +1,12 @@
+import React, { useState } from 'react';
+
 function PizzaBlock(props) {
-  console.log(props);
+  const [pizzaCount, setPizzaCount] = useState(0);
+
+  const pizzaCountUp = () => {
+    setPizzaCount(pizzaCount + 5);
+  };
+
   return (
     <div className="pizza-block">
       <img
@@ -33,8 +40,8 @@ function PizzaBlock(props) {
               fill="white"
             />
           </svg>
-          <span>Добавить</span>
-          <i>2</i>
+          <span onClick={pizzaCountUp}>Добавить</span>
+          <i>{pizzaCount}</i>
         </div>
       </div>
     </div>
