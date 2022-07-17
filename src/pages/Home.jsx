@@ -9,6 +9,7 @@ import PizzaBlock from '../Components/PizzaBlock';
 const Home = () => {
   const [items, setItems] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [activeCategoriesIndex, setActiveCategoriesIndex] = React.useState(0);
 
   React.useEffect(() => {
     fetch('https://62d057061cc14f8c0888fda2.mockapi.io/items')
@@ -23,7 +24,10 @@ const Home = () => {
   return (
     <div className="container">
       <div className="content__top">
-        <Categories />
+        <Categories
+          activeCategoriesIndex={activeCategoriesIndex}
+          setActiveCategoriesIndex={(i) => setActiveCategoriesIndex(i)}
+        />
         <Sort />
       </div>
       <h2 className="content__title">Все пиццы</h2>
