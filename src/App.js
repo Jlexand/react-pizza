@@ -6,15 +6,18 @@ import NotFound from './pages/NotFound'
 import Header from './Components/Header'
 
 import './scss/app.scss'
+import Search from './Components/Search'
+import React from 'react'
 
 function App() {
+  const [SearchValue, setSearchValue] = React.useState('');
 
   return (
     <div className="wrapper">
-      <Header />
+      <Header SearchValue={SearchValue} setSearchValue={setSearchValue} />
       <div className="content">
         <Routes>
-          <Route path='/' element={<Home />} />
+          <Route path='/' element={<Home SearchValue={SearchValue} />} />
           <Route path='/cart' element={<Cart />} />
           <Route path='*' element={<NotFound />} />
         </Routes>
