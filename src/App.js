@@ -6,7 +6,6 @@ import NotFound from './pages/NotFound'
 import Header from './Components/Header'
 
 import './scss/app.scss'
-import Search from './Components/Search'
 import React from 'react'
 
 function App() {
