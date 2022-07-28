@@ -5,8 +5,11 @@ import Categories from '../Components/Categories';
 import Sort from '../Components/Sort';
 import PizzaSkeleton from '../Components/PizzaBlock/Skeleton';
 import PizzaBlock from '../Components/PizzaBlock';
+import { SearchContext } from '../App';
 
-const Home = ({ SearchValue }) => {
+const Home = () => {
+  const {SearchValue} = React.useContext(SearchContext)
+
   const [items, setItems] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [activeCategoriesIndex, setActiveCategoriesIndex] = React.useState(0);

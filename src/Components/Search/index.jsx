@@ -1,6 +1,8 @@
 import React from 'react';
+import { SearchContext } from '../../App';
 
-function Search({ SearchValue, setSearchValue }) {
+function Search() {
+  const {SearchValue, setSearchValue} = React.useContext(SearchContext)
   return (
     <div>
       <div>Иконка</div>
