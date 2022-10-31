@@ -7,7 +7,8 @@ function PizzaBlock({ title, price, types, imageUrl, sizes }) {
   const [activeSize, setActiveSize] = React.useState(0);
 
   return (
-    <div className="pizza-block">
+    <div className='pizza-block-wrapper'>
+      <div className="pizza-block">
       <img className="pizza-block__image" src={imageUrl} alt="Pizza" />
       <h4 className="pizza-block__title">{title}</h4>
       <div className="pizza-block__selector">
@@ -44,6 +45,7 @@ function PizzaBlock({ title, price, types, imageUrl, sizes }) {
           <i>2</i>
         </div>
       </div>
+    </div>
     </div>
   );
 }
