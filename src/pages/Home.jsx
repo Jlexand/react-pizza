@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import Qs from 'qs';
 
 import { setCategoryId, setCurrentPage, setFilters } from '../redux/slices/filterSlice';
-import axios from 'axios';
+import { fetchPizzas } from '../redux/slices/pizzaSlice';
 import Categories from '../components/Categories';
 import Sort, { list } from '../components/Sort';
 import PizzaBlock from '../components/PizzaBlock/PizzaBlock';
@@ -19,10 +19,9 @@ const Home = () => {
   const isMounted = React.useRef(false);
 
   const { categoryId, sort, currentPage } = useSelector((state) => state.filter);
+  const { items, status } = useSelector((state) => state.pizza);
 
   const { searchValue } = React.useContext(SearchContext);
-  const [items, setItems] = React.useState([]);
-  const [isLoading, setIsLoading] = React.useState(true);
 
   const onChangeCategory = (id) => {
     dispatch(setCategoryId(id));
@@ -32,22 +31,21 @@ const Home = () => {
     dispatch(setCurrentPage(number));
   };
 
-  const fetchPizzas = () => {
-    setIsLoading(true);
+  const getPizzas = async () => {
     const sortBy = categoryId > 0 ? `&category=${categoryId}` : '';
     const order = sort.sortProperty.includes('-') ? '&order=asc' : '&order=desc';
     const category = sort.sortProperty.replace('-', '');
     const search = searchValue ? `&search=${searchValue}` : '';
 
-    axios
-      .get(
-        `https://62d057061cc14f8c0888fda2.mockapi.io/items?page=${currentPage}&limit=4${sortBy}&sortBy=${category}${order}${search}`,
-      )
-      .then((res) => {
-        setItems(res.data);
-        setIsLoading(false);
-      }, console.log('get'));
-    console.log('function fetchPizzas');
+    dispatch(
+      fetchPizzas({
+        sortBy,
+        order,
+        category,
+        search,
+        currentPage,
+      }),
+    );
   };
 
   // Проверка на первый рендер
@@ -70,10 +68,7 @@ const Home = () => {
     if (window.location.search) {
       const params = Qs.parse(window.location.search.substring(1));
       const sort = list.find((obj) => obj.sortProperty === params.sortProperty);
-      console.log('Проверка url параметры при первом рендере и сохранение в редаксе', {
-        ...params,
-        sort,
-      });
+
       dispatch(
         setFilters({
           ...params,
@@ -81,6 +76,7 @@ const Home = () => {
         }),
       );
       isSearch.current = true;
+      // getPizzas();
     }
   }, []);
 
@@ -89,7 +85,7 @@ const Home = () => {
     window.scrollTo(0, 0);
 
     if (!isSearch.current) {
-      fetchPizzas();
+      getPizzas();
     }
 
     isSearch.current = false;
@@ -105,7 +101,15 @@ const Home = () => {
         <Sort />
       </div>
       <h2 className="content__title">Все пиццы</h2>
-      <div className="content__items">{isLoading ? skeletons : pizzas}</div>
+      {status === 'error' ? (
+        <div className="cart cart--empty">
+          <h2>
+            Ошибка загрузки пицц<span>😕</span>
+          </h2>
+        </div>
+      ) : (
+        <div className="content__items">{status === 'loading' ? skeletons : pizzas}</div>
+      )}
       <Pagination currentPage={currentPage} onChangePage={onChangePage} />
     </>
   );
