@@ -24,7 +24,6 @@ const Home = () => {
 
   const { categoryId, sort, currentPage, searchValue } = useSelector(selectFilters);
   const { items, status } = useSelector(selectPizzas);
-
   const onChangeCategory = (id) => {
     dispatch(setCategoryId(id));
   };
