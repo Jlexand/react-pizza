@@ -3,7 +3,16 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { addItem, selectCartItemById } from '../../redux/slices/cartSlice';
 
-function PizzaBlock({ id, title, price, types, imageUrl, sizes }) {
+type PizzaBlock = {
+  id: string;
+  title: string;
+  price: number;
+  types: number[];
+  imageUrl: string;
+  sizes: number[];
+}
+
+const PizzaBlock: React.FC<PizzaBlock> = ({ id, title, price, types, imageUrl, sizes }) => {
   const dispatch = useDispatch();
   const cartItem = useSelector(selectCartItemById(id));
   const addedCount = cartItem ? cartItem.count : 0;
@@ -33,7 +42,7 @@ function PizzaBlock({ id, title, price, types, imageUrl, sizes }) {
         </h4>
         <div className="pizza-block__selector">
           <ul>
-            {types.map((type, i) => (
+            {types.map((type: any, i: number) => (
               <li
                 onClick={() => setActiveType(type)}
                 className={activeType === i ? 'active' : ''}
@@ -43,7 +52,7 @@ function PizzaBlock({ id, title, price, types, imageUrl, sizes }) {
             ))}
           </ul>
           <ul>
-            {sizes.map((size, i) => (
+            {sizes.map((size: any, i: number) => (
               <li
                 onClick={() => setActiveSize(i)}
                 className={activeSize === i ? 'active' : ''}
