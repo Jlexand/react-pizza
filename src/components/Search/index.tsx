@@ -23,13 +23,13 @@ const Search: React.FC = () => {
     }, 500),
     [],
   );
-  const onChangeInput = (event: any) => {
+  const onChangeInput = (event: React.ChangeEvent<HTMLInputElement>) => {
     setValue(event.target.value);
     updateSearchValue(event.target.value);
   };
 
   return (
-    <div className={styles.root}>
+    <div className={styles.root}> 
       <svg
         className={styles.icon}
         enableBackground="new 0 0 32 32"

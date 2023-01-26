@@ -42,7 +42,7 @@ const PizzaBlock: React.FC<PizzaBlock> = ({ id, title, price, types, imageUrl, s
         </h4>
         <div className="pizza-block__selector">
           <ul>
-            {types.map((type: any, i: number) => (
+            {types.map((type, i) => (
               <li
                 onClick={() => setActiveType(type)}
                 className={activeType === i ? 'active' : ''}
@@ -52,7 +52,7 @@ const PizzaBlock: React.FC<PizzaBlock> = ({ id, title, price, types, imageUrl, s
             ))}
           </ul>
           <ul>
-            {sizes.map((size: any, i: number) => (
+            {sizes.map((size, i) => (
               <li
                 onClick={() => setActiveSize(i)}
                 className={activeSize === i ? 'active' : ''}
